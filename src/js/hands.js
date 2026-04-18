@@ -80,8 +80,8 @@ const HandsModule = (() => {
     // MediaPipe camera utility feeds video frames into the model
     const mpCam = new Camera(CameraModule.video, {
       onFrame: async () => { await hands.send({ image: CameraModule.video }); },
-      width: 640,
-      height: 480
+      width: 800,
+      height: 600
     });
 
     mpCam.start();

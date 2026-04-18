@@ -18,7 +18,7 @@ const CameraModule = (() => {
   async function start() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 640, height: 480, facingMode: 'user' }
+        video: { width: 800, height: 600, facingMode: 'user' }
       });
       video.srcObject = stream;
       await new Promise(resolve => { video.onloadedmetadata = resolve; });

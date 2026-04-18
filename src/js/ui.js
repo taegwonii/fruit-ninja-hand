@@ -25,7 +25,7 @@ const UIModule = (() => {
     particles.forEach(p => {
       p.x  += p.vx;
       p.y  += p.vy;
-      p.vy += 0.25;       // gravity
+      p.vy += 0.25;
       p.life -= 0.025;
     });
     particles = particles.filter(p => p.life > 0);
@@ -100,6 +100,22 @@ const UIModule = (() => {
   }
 
   // ── HUD ──────────────────────────────────────────────────────
+  function drawLives(ctx, lives, x, centerX) {
+    const r = 7, gap = 20;
+    for (let i = 0; i < 3; i++) {
+      ctx.beginPath();
+      ctx.arc(centerX - (3 - 1) * gap / 2 + i * gap, 30, r, 0, Math.PI * 2);
+      if (i < lives) {
+        ctx.fillStyle = '#e74c3c';
+        ctx.fill();
+      } else {
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+    }
+  }
+
   function drawHUD(state) {
     const ctx    = CameraModule.ctx;
     const canvas = CameraModule.canvas;
@@ -114,7 +130,7 @@ const UIModule = (() => {
     ctx.textAlign  = 'left';
     ctx.fillText(`Score: ${state.score}`, 14, 24);
 
-    // Stage + progress bar (left below score)
+    // Stage + progress bar
     ctx.fillStyle = '#f1c40f';
     ctx.font      = 'bold 14px sans-serif';
     ctx.fillText(`Stage ${state.stage}`, 14, 44);
@@ -125,20 +141,16 @@ const UIModule = (() => {
     ctx.fillStyle = '#f1c40f';
     ctx.fillRect(barX, barY, barW * (state.slicedThisStage / FRUITS_PER_STAGE), barH);
 
-    // Lives (center)
-    let hearts = '';
-    for (let i = 0; i < 3; i++) hearts += i < state.lives ? '❤️' : '🖤';
-    ctx.font      = '20px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(hearts, canvas.width / 2, 32);
+    // Lives (center) — drawn as circles
+    drawLives(ctx, state.lives, 0, canvas.width / 2);
 
     // Blade indicator (right)
-    ctx.font      = 'bold 14px sans-serif';
+    ctx.font      = 'bold 13px sans-serif';
     ctx.fillStyle = state.bladeActive ? '#f1c40f' : '#555';
     ctx.textAlign = 'right';
-    ctx.fillText(state.bladeActive ? '🗡️ BLADE ON' : 'blade off', canvas.width - 14, 32);
+    ctx.fillText(state.bladeActive ? 'BLADE ON' : 'BLADE OFF', canvas.width - 14, 32);
 
-    // Online multiplayer — opponent score top right
+    // Online multiplayer — opponent score
     if (state.opponentScore !== undefined) {
       ctx.fillStyle = '#e74c3c';
       ctx.font      = 'bold 13px sans-serif';
@@ -159,7 +171,7 @@ const UIModule = (() => {
     ctx.textAlign = 'center';
     ctx.fillStyle = 'white';
     ctx.font      = 'bold 38px sans-serif';
-    ctx.fillText('🍉 Fruit Ninja AR', canvas.width/2, canvas.height/2 - 90);
+    ctx.fillText('Fruit Ninja AR', canvas.width/2, canvas.height/2 - 90);
 
     ctx.font      = '18px sans-serif';
     ctx.fillStyle = '#ccc';
@@ -167,16 +179,16 @@ const UIModule = (() => {
     if (mode === 'single') {
       ctx.fillText('Raise your index finger to start', canvas.width/2, canvas.height/2 - 20);
       ctx.fillText('Slice 5 fruits to advance a stage', canvas.width/2, canvas.height/2 + 14);
-      ctx.fillText('Avoid 💣 bombs — they end the game!', canvas.width/2, canvas.height/2 + 48);
+      ctx.fillText('Avoid bombs — they end the game!', canvas.width/2, canvas.height/2 + 48);
     } else {
       ctx.fillText('Connected! Raise your index finger to start', canvas.width/2, canvas.height/2 - 20);
       ctx.fillText('Each player sees their own camera', canvas.width/2, canvas.height/2 + 14);
-      ctx.fillText('Slice 5 fruits per stage • Avoid 💣 bombs', canvas.width/2, canvas.height/2 + 48);
+      ctx.fillText('Slice 5 fruits per stage  •  Avoid bombs', canvas.width/2, canvas.height/2 + 48);
     }
 
     ctx.font      = '14px sans-serif';
     ctx.fillStyle = '#666';
-    ctx.fillText('☝️ index finger = blade   ✌️ = off', canvas.width/2, canvas.height/2 + 90);
+    ctx.fillText('1 finger = blade on   |   2 fingers = blade off', canvas.width/2, canvas.height/2 + 90);
     ctx.textAlign = 'left';
   }
 
@@ -208,9 +220,9 @@ const UIModule = (() => {
 
       ctx.font      = 'bold 22px sans-serif';
       ctx.fillStyle = '#f1c40f';
-      const result  = state.score > state.opponentScore ? '🏆 You Win!'
-                    : state.score < state.opponentScore ? '😔 Opponent Wins'
-                    : '🤝 Tie!';
+      const result  = state.score > state.opponentScore ? 'You Win!'
+                    : state.score < state.opponentScore ? 'Opponent Wins'
+                    : 'Tie!';
       ctx.fillText(result, canvas.width/2, canvas.height/2 + 70);
     }
 
@@ -226,12 +238,12 @@ const UIModule = (() => {
     const canvas = CameraModule.canvas;
 
     ctx.save();
-    ctx.textAlign  = 'center';
-    ctx.font       = 'bold 48px sans-serif';
-    ctx.fillStyle  = '#f1c40f';
+    ctx.textAlign   = 'center';
+    ctx.font        = 'bold 48px sans-serif';
+    ctx.fillStyle   = '#f1c40f';
     ctx.shadowColor = 'black';
     ctx.shadowBlur  = 12;
-    ctx.fillText(`⭐ Stage ${stage}!`, canvas.width/2, canvas.height/2);
+    ctx.fillText(`Stage ${stage}!`, canvas.width/2, canvas.height/2);
     ctx.restore();
   }
 

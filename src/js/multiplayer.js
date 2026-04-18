@@ -129,7 +129,7 @@ const MultiplayerModule = (() => {
 
       // Draw opponent's blade on the preview canvas
       if (data.blade && data.blade.tip) {
-        const scale = opponentCanvas.width / 640;
+        const scale = opponentCanvas.width / 800;
         opponentCtx.beginPath();
         opponentCtx.arc(
           data.blade.tip.x * scale,

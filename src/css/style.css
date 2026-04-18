@@ -3,43 +3,67 @@
 
 /* ── Body ──────────────────────────────────────────────────── */
 body {
-  background: #0a0a0a;
+  background: #080b10;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
   color: white;
-  gap: 10px;
+  gap: 14px;
+}
+
+/* ── Site header / logo ────────────────────────────────────── */
+#siteHeader {
+  text-align: center;
+  user-select: none;
+}
+
+#logoText {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: #e0e0e0;
+  text-transform: uppercase;
+}
+
+#logoText span {
+  color: #e67e22;
 }
 
 /* ── Mode selector buttons ─────────────────────────────────── */
 #modeSelect {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
 #modeSelect button {
-  padding: 10px 26px;
+  padding: 11px 30px;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 15px;
-  border-radius: 8px;
-  border: 2px solid #444;
-  background: #1a1a1a;
-  color: #aaa;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 6px;
+  border: 1.5px solid #2e3440;
+  background: #111620;
+  color: #666;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  outline: none;
 }
 
 #modeSelect button.active {
   background: #e67e22;
   border-color: #e67e22;
-  color: white;
+  color: #fff;
 }
 
 #modeSelect button:hover:not(.active) {
-  background: #2a2a2a;
-  color: white;
+  border-color: #e67e22;
+  color: #e67e22;
 }
 
 /* ── Lobby ─────────────────────────────────────────────────── */
@@ -47,12 +71,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  background: #1a1a1a;
-  border: 1px solid #333;
+  gap: 12px;
+  background: #0e1219;
+  border: 1px solid #1e2535;
   border-radius: 10px;
-  padding: 14px 24px;
-  width: 640px;
+  padding: 18px 28px;
+  width: 800px;
 }
 
 #hostSection, #joinSection {
@@ -62,42 +86,60 @@ body {
 }
 
 #lobby button {
-  padding: 8px 20px;
+  padding: 9px 22px;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   border-radius: 6px;
-  border: 1px solid #555;
-  background: #2a2a2a;
-  color: white;
+  border: 1.5px solid #2e3440;
+  background: transparent;
+  color: #aaa;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: border-color 0.2s, color 0.2s;
+  outline: none;
 }
 
-#lobby button:hover { background: #3a3a3a; }
+#lobby button:hover {
+  border-color: #e67e22;
+  color: #e67e22;
+}
 
 #roomCodeDisplay {
-  font-size: 22px;
-  font-weight: bold;
-  letter-spacing: 4px;
-  color: #f1c40f;
-  min-width: 100px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: #e67e22;
+  min-width: 110px;
 }
 
 #roomCodeInput {
-  padding: 8px 14px;
-  font-size: 16px;
+  padding: 9px 14px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
   border-radius: 6px;
-  border: 1px solid #555;
-  background: #111;
+  border: 1.5px solid #2e3440;
+  background: #080b10;
   color: white;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   width: 160px;
   text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#roomCodeInput:focus {
+  border-color: #e67e22;
 }
 
 #lobbyStatus {
   font-size: 13px;
-  color: #888;
+  color: #555;
+  letter-spacing: 0.5px;
 }
 
 /* ── Video (hidden) ────────────────────────────────────────── */
@@ -105,8 +147,8 @@ video { display: none; }
 
 /* ── Game canvas ───────────────────────────────────────────── */
 #gameCanvas {
-  border: 2px solid #222;
-  border-radius: 12px;
+  border: 1.5px solid #1e2535;
+  border-radius: 10px;
   display: block;
 }
 
@@ -119,27 +161,30 @@ video { display: none; }
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  background: rgba(0,0,0,0.6);
-  border: 1px solid #333;
+  background: rgba(8, 11, 16, 0.85);
+  border: 1px solid #1e2535;
   border-radius: 10px;
-  padding: 8px;
+  padding: 10px;
+  backdrop-filter: blur(6px);
 }
 
 .opponent-label {
-  font-size: 12px;
-  color: #e74c3c;
-  font-weight: bold;
-  letter-spacing: 1px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #c0392b;
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
 
 #opponentCanvas {
-  border-radius: 8px;
-  border: 2px solid #e74c3c;
+  border-radius: 6px;
+  border: 1.5px solid #c0392b;
 }
 
 /* ── Status text ───────────────────────────────────────────── */
 #status {
-  font-size: 13px;
-  color: #555;
+  font-size: 12px;
+  color: #2e3440;
+  letter-spacing: 0.5px;
 }

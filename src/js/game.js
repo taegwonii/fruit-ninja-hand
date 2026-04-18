@@ -24,6 +24,7 @@ const GameModule = (() => {
   // Multiplayer
   let mode           = 'single';
   let opponentScore  = undefined;
+  let waitForRelease = false;  // must lower finger before restart is allowed
 
   // Spawn interval shrinks each stage (faster spawns = harder)
   function spawnInterval() {
@@ -110,7 +111,8 @@ const GameModule = (() => {
   }
 
   function triggerGameOver() {
-    gameState = STATE.GAMEOVER;
+    gameState      = STATE.GAMEOVER;
+    waitForRelease = true;
     if (score > highScore) highScore = score;
     fruits = [];
     UIModule.clearEffects();
@@ -165,9 +167,10 @@ const GameModule = (() => {
       }
 
     } else if (gameState === STATE.GAMEOVER) {
+      if (!blade.active) waitForRelease = false;
       UIModule.drawBlade(blade);
       UIModule.drawGameOverScreen(hudState, mode);
-      if (blade.active) reset();
+      if (blade.active && !waitForRelease) reset();
     }
   }
 
