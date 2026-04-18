@@ -16,7 +16,7 @@ Use your finger as a blade to slice falling fruits!
 
 - HTML5 Canvas
 - Vanilla JavaScript
-- [MediaPipe Hands](https://google.github.io/mediapipe/solutions/hands.html)
+- [MediaPipe Hand Landmarker](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker)
 - CSS3
 
 ## 📋 Development Roadmap
