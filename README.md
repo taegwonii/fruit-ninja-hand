@@ -1,16 +1,16 @@
 # 🍉 Fruit Ninja Hand Tracking Game
 
-웹캠과 MediaPipe 손 인식을 활용한 Fruit Ninja 스타일 게임입니다.
-손가락을 검으로 사용해서 화면에 떨어지는 과일을 슬라이스하세요!
+A Fruit Ninja-style game powered by webcam and MediaPipe hand tracking.
+Use your finger as a blade to slice falling fruits!
 
 ## 🎮 Features
 
-- 📹 실시간 웹캠 피드 (셀피 모드)
-- ✋ MediaPipe 기반 손가락 추적
-- 👆 검지 손가락 제스처 감지
-- 🍎 떨어지는 과일 스폰
-- ⚔️ 슬라이스 감지 및 점수 시스템
-- 💥 게임 오버 및 사운드 효과
+- 📹 Real-time webcam feed (selfie mirror mode)
+- ✋ MediaPipe-based finger tracking
+- 👆 Index finger gesture detection
+- 🍎 Falling fruit spawning system
+- ⚔️ Slice detection and scoring
+- 💥 Game over screen and sound effects
 
 ## 🛠 Tech Stack
 
@@ -30,46 +30,46 @@
 
 ## 🚀 Getting Started
 
-### 로컬 실행
-HTTPS가 필요하므로 로컬 서버를 사용하세요.
+### Run Locally
+HTTPS is required for webcam access, so use a local server.
 
 ```bash
-# Python이 있다면
+# If you have Python
 python3 -m http.server 8000
 
-# 또는 Node.js의 live-server
+# Or use Node.js live-server
 npx live-server
 ```
 
-브라우저에서 `http://localhost:8000` 접속
+Open `http://localhost:8000` in your browser.
 
-> ⚠️ 카메라 권한이 필요합니다. HTTPS 또는 localhost 환경에서만 작동합니다.
+> ⚠️ Camera permission is required. Only works on HTTPS or localhost environments.
 
 ## 📁 Project Structure
 
 ```
 fruit-ninja-hand/
-├── index.html          # 메인 HTML
+├── index.html          # Main HTML
 ├── src/
 │   ├── js/
-│   │   ├── main.js     # 게임 엔트리 포인트
-│   │   ├── camera.js   # Step 1: 카메라 모듈
-│   │   ├── hands.js    # Step 2-3: MediaPipe 손 인식
-│   │   ├── fruits.js   # Step 4-5: 과일 스폰 & 슬라이스
-│   │   └── game.js     # Step 6: 게임 상태 관리
+│   │   ├── main.js     # Game entry point
+│   │   ├── camera.js   # Step 1: Camera module
+│   │   ├── hands.js    # Step 2-3: MediaPipe hand tracking
+│   │   ├── fruits.js   # Step 4-5: Fruit spawning & slice detection
+│   │   └── game.js     # Step 6: Game state management
 │   ├── css/
 │   │   └── style.css
 │   └── assets/
 │       ├── sounds/
 │       └── images/
-└── docs/               # 프로젝트 문서
+└── docs/               # Project documentation
 ```
 
 ## 🌿 Branch Strategy
 
-- `main` — 배포 가능한 안정 버전
-- `develop` — 개발 통합 브랜치
-- `feature/*` — 각 Step별 기능 개발
+- `main` — Stable, deployable version
+- `develop` — Development integration branch
+- `feature/*` — Feature branches for each Step
 
 ## 📝 License
 
