@@ -1,29 +1,59 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍉 Fruit Ninja - Hand Tracking</title>
-    <link rel="stylesheet" href="src/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fruit Ninja AR</title>
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- MediaPipe -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <!-- PeerJS for online multiplayer -->
+  <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.1/dist/peerjs.min.js"></script>
 </head>
 <body>
-    <div id="game-container">
-        <video id="webcam" autoplay playsinline></video>
-        <canvas id="game-canvas"></canvas>
-        
-        <div id="ui-overlay">
-            <div id="score">Score: 0</div>
-            <div id="lives">Lives: 3</div>
-        </div>
+
+  <!-- Mode selector -->
+  <div id="modeSelect">
+    <button id="btnSingle" class="active" onclick="setMode('single')">☝️ Single Player</button>
+    <button id="btnMulti" onclick="setMode('multi')">🌐 Online Multiplayer</button>
+  </div>
+
+  <!-- Multiplayer lobby (hidden in single player) -->
+  <div id="lobby" style="display:none;">
+    <div id="hostSection">
+      <button onclick="hostGame()">🎮 Host Game</button>
+      <span id="roomCodeDisplay"></span>
     </div>
+    <div id="joinSection">
+      <input id="roomCodeInput" type="text" maxlength="6" placeholder="Enter room code" />
+      <button onclick="joinGame()">Join</button>
+    </div>
+    <p id="lobbyStatus"></p>
+  </div>
 
-    <!-- MediaPipe scripts (Step 2에서 사용) -->
-    <!-- 
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
-    -->
+  <!-- Hidden video element — receives raw camera stream -->
+  <video id="video" autoplay playsinline></video>
 
-    <script type="module" src="src/js/main.js"></script>
+  <!-- Main game canvas -->
+  <canvas id="gameCanvas" width="640" height="480"></canvas>
+
+  <!-- Opponent canvas (shown in multiplayer) -->
+  <div id="opponentPanel" style="display:none;">
+    <p class="opponent-label">Opponent</p>
+    <canvas id="opponentCanvas" width="240" height="180"></canvas>
+  </div>
+
+  <p id="status">Loading...</p>
+
+  <!-- Game modules — order matters -->
+  <script src="js/camera.js"></script>
+  <script src="js/hands.js"></script>
+  <script src="js/fruits.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/multiplayer.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,23 +1,56 @@
-// Fruit Ninja Hand Tracking - Main Entry Point
-// Step 1부터 차례대로 구현해 나갑니다.
+// main.js
+// Entry point — initialises everything and runs the main game loop
 
-console.log('🍉 Fruit Ninja Hand Tracking - 게임 시작 준비');
+let currentMode = 'single';
 
-// TODO: Step 1 - Camera module import
-// import { initCamera } from './camera.js';
+// ── Mode switcher (called from index.html buttons) ───────────
+function setMode(m) {
+  currentMode = m;
+  GameModule.setMode(m);
 
-// TODO: Step 2-3 - Hand tracking import
-// import { initHandTracking } from './hands.js';
+  document.getElementById('btnSingle').className = m === 'single' ? 'active' : '';
+  document.getElementById('btnMulti').className  = m === 'multi'  ? 'active' : '';
+  document.getElementById('lobby').style.display = m === 'multi'  ? 'flex'   : 'none';
 
-// TODO: Step 4-5 - Fruits module import
-// import { spawnFruit, checkSlice } from './fruits.js';
-
-// TODO: Step 6 - Game state
-// import { GameState } from './game.js';
-
-async function main() {
-    console.log('게임 초기화 중...');
-    // 여기서부터 Step 1 카메라 연결 시작
+  // Hide opponent panel when switching back to single
+  if (m === 'single') {
+    document.getElementById('opponentPanel').style.display = 'none';
+    MultiplayerModule.disconnect();
+  }
 }
 
-main();
+// ── Main game loop ───────────────────────────────────────────
+function gameLoop() {
+  // 1. Draw mirrored camera feed as background
+  CameraModule.drawFeed();
+
+  // 2. Get current blade state from hand tracking
+  const blade = HandsModule.blade;
+
+  // 3. Update game logic
+  GameModule.update(blade);
+
+  // 4. Draw everything
+  GameModule.draw(blade);
+
+  // 5. In multiplayer, send our state to opponent each frame
+  if (currentMode === 'multi' && MultiplayerModule.isConnected()) {
+    MultiplayerModule.send({
+      score: GameModule.getScore(),
+      stage: GameModule.getStage(),
+      blade: {
+        active: blade.active,
+        tip:    blade.tip
+      }
+    });
+  }
+
+  requestAnimationFrame(gameLoop);
+}
+
+// ── Boot ─────────────────────────────────────────────────────
+(async () => {
+  await CameraModule.start();          // start camera
+  HandsModule.setup();                 // start MediaPipe hand tracking
+  gameLoop();                          // start the game loop
+})();

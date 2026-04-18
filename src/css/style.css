@@ -1,49 +1,145 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* ── Reset ─────────────────────────────────────────────────── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* ── Body ──────────────────────────────────────────────────── */
 body {
-    background: #000;
-    overflow: hidden;
-    font-family: 'Arial', sans-serif;
-    color: #fff;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  gap: 10px;
 }
 
-#game-container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* ── Mode selector buttons ─────────────────────────────────── */
+#modeSelect {
+  display: flex;
+  gap: 12px;
 }
 
-#webcam {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scaleX(-1); /* 셀피 미러링 */
+#modeSelect button {
+  padding: 10px 26px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 2px solid #444;
+  background: #1a1a1a;
+  color: #aaa;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-#game-canvas {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
+#modeSelect button.active {
+  background: #e67e22;
+  border-color: #e67e22;
+  color: white;
 }
 
-#ui-overlay {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    z-index: 20;
-    display: flex;
-    justify-content: space-between;
-    font-size: 24px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+#modeSelect button:hover:not(.active) {
+  background: #2a2a2a;
+  color: white;
+}
+
+/* ── Lobby ─────────────────────────────────────────────────── */
+#lobby {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 14px 24px;
+  width: 640px;
+}
+
+#hostSection, #joinSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#lobby button {
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #2a2a2a;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#lobby button:hover { background: #3a3a3a; }
+
+#roomCodeDisplay {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  color: #f1c40f;
+  min-width: 100px;
+}
+
+#roomCodeInput {
+  padding: 8px 14px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #111;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  width: 160px;
+  text-align: center;
+}
+
+#lobbyStatus {
+  font-size: 13px;
+  color: #888;
+}
+
+/* ── Video (hidden) ────────────────────────────────────────── */
+video { display: none; }
+
+/* ── Game canvas ───────────────────────────────────────────── */
+#gameCanvas {
+  border: 2px solid #222;
+  border-radius: 12px;
+  display: block;
+}
+
+/* ── Opponent panel ────────────────────────────────────────── */
+#opponentPanel {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.opponent-label {
+  font-size: 12px;
+  color: #e74c3c;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#opponentCanvas {
+  border-radius: 8px;
+  border: 2px solid #e74c3c;
+}
+
+/* ── Status text ───────────────────────────────────────────── */
+#status {
+  font-size: 13px;
+  color: #555;
 }
